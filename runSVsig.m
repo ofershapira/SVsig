@@ -1,10 +1,26 @@
-% load ICGC model and data structures
-load ICGC_2D_SV_model.mat
+% load or generate ICGC model and data structures
+model_exist = false;
+
+WorkDir = pwd;
+addpath(genpath(pwd))
+%DataDir = strcat(WorkDir,'/data/');
+%TracksDir = strcat(WorkDir,'/tracks/');
 
 % load data table with merged SV with the following columns:
 % {seqnames, start, strand1, altchr, altpos, strand2, subtype(histology), sv_id, sid(sample ID), donor_unique_id} 
-sv_file='Your_File_Here';
+sv_file=strcat(WorkDir,'/tracks/merged_1.6.1.csv');
 SVTable=readtable(sv_file, 'Delimiter', '\t');
+
+if model_exist
+
+    load ICGC_2D_SV_model.mat
+
+else
+
+    mix_model
+
+end
+
 
 EventLengthThreshold=1e2;
 len_filter=1e6;
